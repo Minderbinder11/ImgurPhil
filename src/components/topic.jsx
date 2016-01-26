@@ -1,9 +1,43 @@
 var React = require('react');
+var Actions = require('../actions');
+var ImageStore = require('../stores/image-store');
+var Reflux = require('reflux');
+var ImagePreview = require('./image-preview');
 
-module.export = React.createClass({
+module.exports = React.createClass({
 
-    render: function (){
-        return
-      <div> I am a topic. </div>
+    mixins: [
+        Reflux.listenTo(ImageStore, 'onChange')
+    ],
+
+    getInitialState: function(){
+        return {
+            images: []
+        }
+    },
+
+    componentWillMount: function(){
+        Actions.getImages(this.props.params.id);
+    },
+
+    componentWillReceiveProps: function(nextProps){
+        Actions.getImages(nextProps.params.id);
+    },
+
+    render: function(){
+        return <div className="topic">
+            {this.renderImages()}
+        </div>
+    },
+
+    renderImages: function (){
+
+        return this.state.images.slice(0, 60).map(function(image){
+            return <ImagePreview key={image.id} {...image}> </ImagePreview>
+        });
+    },
+
+    onChange: function(event, images){
+        this.setState({images: images});
     }
 });

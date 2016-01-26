@@ -18,12 +18,12 @@ module.exports = React.createClass({
     },
 
     componentWillMount: function(){
+
         Actions.getTopics();
     },
 
     render: function (){
         return <div className="list-group">
-            Topic List
             {this.renderTopics()}
         </div>
     },
@@ -41,4 +41,5 @@ module.exports = React.createClass({
     onChange: function(event, topics){
         this.setState({topics:topics});
     }
+
 });
