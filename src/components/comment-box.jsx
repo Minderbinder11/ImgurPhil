@@ -1,5 +1,6 @@
 var React = require('react');
 var Reflux = require('reflux');
+var CommentDetail = require('./comment-detail');
 
 module.exports = React.createClass({
 
@@ -17,6 +18,8 @@ module.exports = React.createClass({
                 <span className="badge">{comment.ups}</span>
                 <h5>{comment.author}</h5>
                 {comment.comment}
+                <CommentDetail comm={comment.children}> </CommentDetail>
+
             </li>
         })
     }
